@@ -1,23 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
+import { Navbar, Container, Nav, Row, Col } from "react-bootstrap";
+import data from "./data.js";
+import Product from "./components/product";
 
 function App() {
+  const [mokokos] = useState(data);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Navbar bg="dark" variant="dark">
+        <Container>
+          <Navbar.Brand href="#home">MokokoStore</Navbar.Brand>
+          <Nav className="me-auto">
+            <Nav.Link href="#home">Home</Nav.Link>
+            <Nav.Link href="#features">Cart</Nav.Link>
+          </Nav>
+        </Container>
+      </Navbar>
+
+      <div className="main-bg"></div>
+
+      {mokokos && mokokos.length > 0 && (
+        <Container>
+          <Row>
+            {mokokos.map((mokoko, index) => (
+              <Col>
+                <Product
+                  name={mokoko.name}
+                  content={mokoko.content}
+                  price={mokoko.price}
+                  imgUrl={mokoko.imgUrl}
+                  index={index}
+                />
+              </Col>
+            ))}
+          </Row>
+        </Container>
+      )}
     </div>
   );
 }
