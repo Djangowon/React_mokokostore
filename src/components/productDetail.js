@@ -6,12 +6,20 @@ function ProductDetail(props) {
   const mokokos = props.mokokos;
 
   const [timeOut, setTimeOut] = useState(0);
+  const [text, setText] = useState("");
 
   useEffect(() => {
     setTimeout(() => {
       setTimeOut(1);
     }, 2000);
   }, []);
+
+  const onChange = (e) => {
+    setText(e.target.value);
+    if (isNaN(text) == true) {
+      alert("숫자만 입력하세요");
+    }
+  };
 
   return (
     <div>
@@ -28,7 +36,10 @@ function ProductDetail(props) {
             <h4 className="pt-5">{mokokos[id].name}</h4>
             <p>{mokokos[id].content}</p>
             <p>{mokokos[id].price}원</p>
-            <button className="btn btn-danger">주문하기</button>
+            <input type="text" onChange={onChange} />
+            <button type="submit" className="btn btn-danger">
+              주문하기
+            </button>
           </div>
         </div>
       </div>

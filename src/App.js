@@ -53,8 +53,14 @@ function App() {
                   <Row>
                     {mokokos.map((mokoko, index) => {
                       return (
-                        <Col key={mokoko.id}>
-                          <Product mokoko={mokoko} />
+                        <Col
+                          onClick={() => {
+                            navigate(`/detail/${mokoko.id}`);
+                          }}
+                        >
+                          <Col key={mokoko.id}>
+                            <Product mokoko={mokoko} />
+                          </Col>
                         </Col>
                       );
                     })}
