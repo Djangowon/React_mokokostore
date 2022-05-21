@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./App.css";
-import { Navbar, Container, Nav, Row, Col } from "react-bootstrap";
+import { Navbar, Container, Nav, Row, Col, Button } from "react-bootstrap";
 import data from "./data.js";
 import Product from "./components/product";
 import {
@@ -12,9 +12,10 @@ import {
   useParams,
 } from "react-router-dom";
 import ProductDetail from "./components/productDetail";
+import axios from "axios";
 
 function App() {
-  const [mokokos] = useState(data);
+  const [mokokos, setMokokos] = useState(data);
   const navigate = useNavigate();
 
   return (
@@ -49,27 +50,57 @@ function App() {
             <div>
               <div className="main-bg"></div>
               {mokokos && mokokos.length > 0 && (
-                <Container>
+                <Container
+                  style={{
+                    flex: 1,
+                    display: "grid",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
                   <Row>
                     {mokokos.map((mokoko, index) => {
                       return (
                         <Col
+                          key={mokoko.id}
                           onClick={() => {
                             navigate(`/detail/${mokoko.id}`);
                           }}
                         >
-                          <Col key={mokoko.id}>
-                            <Product mokoko={mokoko} />
-                          </Col>
+                          <Product mokoko={mokoko} />
                         </Col>
                       );
                     })}
                   </Row>
+                  <Button
+                    // onClick={() => {
+                    //   axios
+                    //     .get("http://codingapple1.github.io/shop/data2.json")
+                    //     .then((data) => {
+                    //       console.log(mokokos);
+                    //       console.log(data.data);
+                    //       // const copy = [...mokokos, ...data.data];
+                    //       setMokokos(copy);
+                    //     })
+                    //     .catch((error) => {
+                    //       console.log(error);
+                    //     });
+                    // }}
+                    onClick={() => {
+                      const copy = [...mokokos, ...mokokos];
+                      setMokokos(copy);
+                    }}
+                    variant="success"
+                    size="lg"
+                  >
+                    더 보기
+                  </Button>
                 </Container>
               )}
             </div>
           }
         />
+
         <Route
           path="/detail/:id"
           element={
