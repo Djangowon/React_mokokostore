@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./App.css";
 import { Navbar, Container, Nav, Row, Col, Button } from "react-bootstrap";
 import data from "./data.js";
-import Product from "./components/product";
+import Product from "./components/Product";
 import {
   Routes,
   Route,
@@ -11,12 +11,20 @@ import {
   Outlet,
   useParams,
 } from "react-router-dom";
-import ProductDetail from "./components/productDetail";
+import ProductDetail from "./components/ProductDetail";
 import axios from "axios";
+import Cart from "./components/Cart";
 
 function App() {
   const [mokokos, setMokokos] = useState(data);
   const navigate = useNavigate();
+
+  const styledC = {
+    flex: "1",
+    display: "grid",
+    justifyContent: "center",
+    alignItems: "center",
+  };
 
   return (
     <div className="App">
@@ -50,14 +58,7 @@ function App() {
             <div>
               <div className="main-bg"></div>
               {mokokos && mokokos.length > 0 && (
-                <Container
-                  style={{
-                    flex: 1,
-                    display: "grid",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
+                <Container style={styledC}>
                   <Row>
                     {mokokos.map((mokoko, index) => {
                       return (
@@ -72,31 +73,31 @@ function App() {
                       );
                     })}
                   </Row>
-                  <Button
-                    // onClick={() => {
-                    //   axios
-                    //     .get("http://codingapple1.github.io/shop/data2.json")
-                    //     .then((data) => {
-                    //       console.log(mokokos);
-                    //       console.log(data.data);
-                    //       // const copy = [...mokokos, ...data.data];
-                    //       setMokokos(copy);
-                    //     })
-                    //     .catch((error) => {
-                    //       console.log(error);
-                    //     });
-                    // }}
-                    onClick={() => {
-                      const copy = [...mokokos, ...mokokos];
-                      setMokokos(copy);
-                    }}
-                    variant="success"
-                    size="lg"
-                  >
-                    더 보기
-                  </Button>
                 </Container>
               )}
+              <Button
+                // onClick={() => {
+                //   axios
+                //     .get("http://codingapple1.github.io/shop/data2.json")
+                //     .then((data) => {
+                //       console.log(mokokos);
+                //       console.log(data.data);
+                //       // const copy = [...mokokos, ...data.data];
+                //       setMokokos(copy);
+                //     })
+                //     .catch((error) => {
+                //       console.log(error);
+                //     });
+                // }}
+                onClick={() => {
+                  const copy = [...mokokos, ...mokokos];
+                  setMokokos(copy);
+                }}
+                variant="success"
+                size="lg"
+              >
+                더 보기
+              </Button>
             </div>
           }
         />
@@ -109,6 +110,7 @@ function App() {
             </div>
           }
         />
+        <Route path="/cart" element={<Cart />} />
         <Route path="/event" element={<Event />}>
           <Route path="one" element={<div>첫 주문시 양배추즙 서비스</div>} />
           <Route path="two" element={<div>생일기념 쿠폰받기</div>} />
